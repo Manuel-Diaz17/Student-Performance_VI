@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Visualization</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Student Performance Visualization</h1>
+    </header>
+    <main>
+        <!-- Visualização 1: Histograma -->
+        <section id="histogram">
+            <h2>Histograma: Notas Finais</h2>
+            <div id="histogram-chart"></div>
+        </section>
+
+        <!-- Visualização 2: Gráfico de Dispersão -->
+        <section id="scatterplot">
+            <h2>Dispersão: Faltas vs. Notas</h2>
+            <div id="scatterplot-chart"></div>
+        </section>
+
+        <!-- Visualização 3: Box Plot -->
+        <section id="boxplot">
+            <h2>Box Plot: Variáveis Diversas</h2>
+            <div id="boxplot-chart"></div>
+        </section>
+
+        <!-- Visualização 4: Diagrama de Radar -->
+        <section id="radar">
+            <h2>Diagrama de Radar</h2>
+            <div id="radar-chart"></div>
+        </section>
+    </main>
+    <footer>
+        <p>Projeto desenvolvido com D3.js</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
