@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Performance Visualization</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/demographic.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
@@ -12,33 +12,34 @@
         <h1>Student Performance Visualization</h1>
     </header>
     <main>
-        <!-- Visualização 1: Histograma -->
-        <section id="barchart">
-            <h2>Gráfico de Barras: Notas Finais</h2>
-            <div id="bar-chart"></div>
-        </section>
+        <div id="container">
+            <!-- Visualização 1: Bar Chart - Distribuição das notas-->
+            <div id="left-panel">
+                <h3>Final Grades Distribution</h2>
+                <div id="bar-chart"></div>
+            </div>
 
-        <!-- Visualização 2: Gráfico de Dispersão -->
-        <section id="scatterplot">
-            <h2>Dispersão: Faltas vs. Notas</h2>
-            <div id="scatterplot-chart"></div>
-        </section>
-
-        <!-- Visualização 3: Box Plot -->
-        <section id="boxplot">
-            <h2>Box Plot: Variáveis Diversas</h2>
-            <div id="boxplot-chart"></div>
-        </section>
-
-        <!-- Visualização 4: Diagrama de Radar -->
-        <section id="radar">
-            <h2>Diagrama de Radar</h2>
-            <div id="radar-chart"></div>
-        </section>
+            <!-- Visualização 2 e 3: Box Plot - Formação do pai e da mãe-->
+            <div id="right-panel">
+                <div class="boxplot-container">
+                    <h3>Mother's Qualification in Final Grade</h2>
+                    <div id="boxplot-mother"></div>
+                </div>
+                <div class="boxplot-container">
+                    <h3>Father's Qualification in Final Grade</h2>
+                    <div id="boxplot-father"></div>
+                </div>
+            </div>
+            <div id="tooltip" style="position: absolute; opacity: 0; background: white; border: 1px solid #ddd; border-radius: 5px; padding: 5px; pointer-events: none;"></div>
+        </div>
     </main>
     <footer>
-        <p>Projeto desenvolvido com D3.js</p>
+        <nav>
+            <a href="index.html">Demographic</a>
+            <a href="academic.html">Academic</a>
+            <a href="behavioral.html">Behavioral</a>
+        </nav>
     </footer>
-    <script src="script.js"></script>
+    <script src="./scripts/demographic.js"></script>
 </body>
 </html>

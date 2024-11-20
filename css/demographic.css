@@ -1,0 +1,102 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 8px;
+}
+
+/* Layout Principal */
+#container {
+    display: grid;
+    grid-template-columns: 3fr 2fr; /* Bar chart ocupa 2 partes, box plots ocupam 3 */
+    grid-template-rows: 1fr;
+    gap: 20px;
+    height: calc(100vh - 120px); /* Altura da tela menos header e footer */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+h3 {
+    margin-bottom: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+}
+
+#left-panel, #right-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+#bar-chart, #boxplot-mother, #boxplot-father {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Garante que nada exceda os limites */
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+footer nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 14px;
+}
+
+footer nav a:hover {
+    text-decoration: underline;
+}
+
+#histogram-chart svg {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+.axis text {
+    font-size: 12px;
+    fill: #333;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+rect:hover {
+    fill: #4682b4; /* Cor ao passar o mouse */
+}
+
+#tooltip {
+    position: absolute;
+    opacity: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 12px;
+    pointer-events: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
