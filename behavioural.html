@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Performance Visualization - behavioural</title>
+  <link rel="stylesheet" href="./css/behavioural.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Student Performance Visualization - Behavioral
+        </h1>
+    </header>
+    <main>
+        <div id="containerbehav">
+            <!-- Visualização 1: Box Plot - Relação entre notas finais e consumo de álcool-->
+            <div id="center-panel">
+                <h3>Box Plot: Final Grade vs Weekend Alcohol Consumption</h3>
+                <div id="boxplot"></div>
+            </div>
+            <div id="center-panel-2">
+                <h3>Box Plot: Final Grade vs Going Out with Friends</h3>
+                <div id="boxplot-friends"></div>
+            </div>
+            <div id="tooltip" style="position: absolute; opacity: 0; background: white; border: 1px solid #ddd; border-radius: 5px; padding: 5px; pointer-events: none;"></div>
+        </div>
+    </main>
+    <footer>
+        <nav>
+            <a href="index.html">Demographic</a>
+            <a href="academic.html">Academic</a>
+            <a href="behavioural.html">Behavioral</a>
+        </nav>
+    </footer>
+    <script src="scripts/behavioural.js"></script>
+</body>
+</html>
