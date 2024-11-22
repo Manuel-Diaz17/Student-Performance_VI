@@ -13,12 +13,162 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Erro ao carregar os dados:", error);
     });
 
-    d3.dsv(";", "./data/student-merge.csv").then(data => {
-        // Converter as notas finais para números
-        data.forEach(d => {
-            d.G3 = isNaN(+d.G3) ? 0 : +d.G3;
+    let originalData;
+
+    // Função para filtrar os dados com base nos filtros selecionados
+    function filterData(data) {
+        const selectedSex = document.getElementById("sex-filter").value;
+        const selectedAge = document.getElementById("age-filter").value;
+        const isAllAgesChecked = document.getElementById("all-ages").checked; // Verifica o estado do checkbox
+        const selectedAddress = document.getElementById("address-filter").value;
+        const selectedPstatus = document.getElementById("pstatus-filter").value;
+
+        return data.filter(d => {
+            return (
+                (selectedSex === "all" || d.sex === selectedSex) &&
+                (isAllAgesChecked || +d.age === +selectedAge) &&
+                (selectedAddress === "all" || d.address === selectedAddress) &&
+                (selectedPstatus === "all" || d.Pstatus === selectedPstatus)
+            );
         });
+    }
+
+    // Função para resetar todos os filtros para 'all'
+    function resetFilters() {
+        // Resetar idade
+        d3.select("#age-value").text("All");
+        d3.select("#all-ages").property("checked", true);
+
+        // Resetar outros filtros
+        d3.select("#sex-filter").property("value", "all");
+        d3.select("#address-filter").property("value", "all");
+        d3.select("#pstatus-filter").property("value", "all");
+
+        d3.select("#all-ages").property("checked", true);
+
+        // Atualizar gráficos com todos os dados
+        updateAllCharts(originalData); // originalData é o dataset completo
+    }
+
+    // Adicionar evento ao botão de reset
+    document.getElementById("reset-filters").addEventListener("click", resetFilters);
+
+    d3.select("#all-ages").property("checked", true);
+    document.getElementById("age-filter").disabled = true; // Desabilita o slider
+
+    // Função para atualizar todos os gráficos
+    function updateAllCharts(data) {
+        const filteredData = filterData(data);
+
+        // Atualizar gráfico de barras
+        updateBarChart(filteredData);
+
+        const filteredMotherBoxPlotData = calculateBoxPlotData(filteredData, "Medu", "G3");
+        const filteredFatherBoxPlotData = calculateBoxPlotData(filteredData, "Fedu", "G3");
+
+        // Atualizar box plots
+        updateBoxPlot("#boxplot-mother", filteredMotherBoxPlotData, "Medu", "Mother's Qualification", "Final Grade");
+        updateBoxPlot("#boxplot-father", filteredFatherBoxPlotData, "Fedu", "Father's Qualification", "Final Grade");
+    }
+
+    // Adicionar eventos aos filtros
+    ["sex-filter", "address-filter", "pstatus-filter"].forEach(filterId => {
+        document.getElementById(filterId).addEventListener("change", () => {
+            updateAllCharts(originalData);
+        });
+    });
+
+    // Atualizar o valor do slider e aplicar o filtro
+    document.getElementById("age-filter").addEventListener("input", (event) => {
+        const selectedAge = event.target.value;
+
+        // Atualizar o texto do rótulo
+        document.getElementById("age-value").textContent = selectedAge;
+
+        // Se o checkbox "Todas as idades" estiver desmarcado, atualize os gráficos
+        if (!document.getElementById("all-ages").checked) {
+            updateAllCharts(originalData);
+        }
+    });
+
+    // Atualizar gráficos quando o checkbox "Todas as idades" for alterado
+    document.getElementById("all-ages").addEventListener("change", (event) => {
+        const isChecked = event.target.checked;
+
+        if (isChecked) {
+            // Mostrar todas as idades
+            document.getElementById("age-filter").disabled = true; // Desabilita o slider
+            document.getElementById("age-value").textContent = "All";
+            updateAllCharts(originalData);
+        } else {
+            // Retornar ao valor do slider
+            document.getElementById("age-filter").disabled = false; // Habilita o slider
+            const selectedAge = document.getElementById("age-filter").value;
+            document.getElementById("age-value").textContent = selectedAge;
+            updateAllCharts(originalData);
+        }
+    });
+
+    // Função para atualizar o gráfico de barras
+    function updateBarChart(data) {
+        // Contar a frequência de cada nota final
+        const gradeCounts = d3.range(0, 21).map(grade => ({
+            grade: grade,
+            count: data.filter(d => d.G3 === grade).length
+        }));
     
+        // Selecionar o contêiner SVG criado no drawBarChart
+        const svg = d3.select("#bar-chart svg g");
+    
+        // Configuração do gráfico
+        const width = 800 - 30 - 50; // Mantém as margens do drawBarChart
+        const height = 400 - 30 - 50;
+    
+        // Recalcular as escalas
+        const x = d3.scaleBand()
+            .domain(gradeCounts.map(d => d.grade)) // Notas de 0 a 20
+            .range([0, width])
+            .padding(0.2);
+    
+        const y = d3.scaleLinear()
+            .domain([0, d3.max(gradeCounts, d => d.count)]).nice()
+            .range([height, 0]);
+    
+        // Atualizar eixo X
+        svg.select(".x-axis").remove(); // Remove eixo existente
+        svg.append("g")
+            .attr("class", "x-axis")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x));
+    
+        // Atualizar eixo Y
+        svg.select(".y-axis").remove(); // Remove eixo existente
+        svg.append("g")
+            .attr("class", "y-axis")
+            .call(d3.axisLeft(y));
+    
+        // Atualizar barras
+        svg.selectAll("rect")
+            .data(gradeCounts)
+            .join(
+                enter => enter.append("rect")
+                    .attr("x", d => x(d.grade))
+                    .attr("width", x.bandwidth())
+                    .attr("y", y(0)) // Começa do zero para transição
+                    .attr("height", 0)
+                    .attr("fill", "#69b3a2"),
+                update => update,
+                exit => exit.remove()
+            )
+            .transition().duration(500) // Transição suave
+            .attr("x", d => x(d.grade))
+            .attr("y", d => y(d.count))
+            .attr("height", d => height - y(d.count)); // Altura correta
+    }
+    
+    
+
+    function drawBarChart(data) {    
         // Contar a frequência de cada nota final
         const gradeCounts = d3.range(0, 21).map(grade => ({
             grade: grade,
@@ -55,11 +205,13 @@ document.addEventListener("DOMContentLoaded", () => {
     
         // Eixo X
         svg.append("g")
+            .attr("class", "x-axis") // Classe para referência futura
             .attr("transform", `translate(0,${height})`)
             .call(d3.axisBottom(x));
     
         // Eixo Y
         svg.append("g")
+            .attr("class", "y-axis") // Classe para referência futura
             .call(d3.axisLeft(y));
 
         // Adicionar legendas ao gráfico de barras
@@ -103,10 +255,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 tooltip.transition().duration(200).style("opacity", 0);
             });
             
-    }).catch(error => {
-        console.error("Erro ao carregar os dados:", error);
-    });
-        
+    }
+       
     // Função para calcular os dados de um box plot
     function calculateBoxPlotData(data, groupKey, valueKey) {
         const groupedData = d3.group(data, d => d[groupKey]);
@@ -127,9 +277,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Configuração para os box plots
     const boxPlotConfig = {
-        width: 300,
-        height: 170,
-        margin: { top: 20, right: 140, bottom: 45, left: 50 }
+        width: 270,
+        height: 150,
+        margin: { top: 5, right: 140, bottom: 45, left: 50 }
     };
 
     function addBoxPlotLegend(svg, x, y) {
@@ -156,8 +306,98 @@ document.addEventListener("DOMContentLoaded", () => {
             .style("font-size", "12px")
             .attr("fill", "#333");
     }
-    
 
+    // Função para atualizar os box plots
+    function updateBoxPlot(containerId, data, groupKey, xLabel, yLabel) {
+        const { width, height } = boxPlotConfig;
+    
+        const svg = d3.select(containerId).select("svg g");
+    
+        // Escalas
+        const x = d3.scaleBand()
+            .domain(data.map(d => d.key).sort(d3.ascending))
+            .range([0, width])
+            .padding(0.4);
+    
+        const y = d3.scaleLinear()
+            .domain([0, 20]) // Notas de 0 a 20
+            .range([height, 0]);
+    
+        // Atualizar eixos
+        svg.select(".x-axis")
+            .transition().duration(500)
+            .call(d3.axisBottom(x));
+
+        svg.select(".y-axis")
+            .transition().duration(500)
+            .call(d3.axisLeft(y));
+
+        // Atualizar os box plots
+        const boxGroups = svg.selectAll("g.box")
+            .data(data);
+    
+        // Entrar e atualizar
+        boxGroups.join(
+            enter => {
+                const group = enter.append("g").attr("class", "box");
+    
+                group.append("rect")
+                    .attr("x", d => x(d.key))
+                    .attr("width", x.bandwidth())
+                    .attr("y", y(0))
+                    .attr("height", 0)
+                    .attr("fill", "#69b3a2")
+                    .transition().duration(500)
+                    .attr("y", d => y(d.q3))
+                    .attr("height", d => y(d.q1) - y(d.q3));
+    
+                group.append("line")
+                    .attr("class", "median-line")
+                    .attr("x1", d => x(d.key))
+                    .attr("x2", d => x(d.key) + x.bandwidth())
+                    .attr("y1", y(0))
+                    .attr("y2", y(0))
+                    .transition().duration(500)
+                    .attr("y1", d => y(d.median))
+                    .attr("y2", d => y(d.median));
+    
+                group.append("line")
+                    .attr("class", "min-max-line")
+                    .attr("x1", d => x(d.key) + x.bandwidth() / 2)
+                    .attr("x2", d => x(d.key) + x.bandwidth() / 2)
+                    .attr("y1", y(0))
+                    .attr("y2", y(0))
+                    .transition().duration(500)
+                    .attr("y1", d => y(d.min))
+                    .attr("y2", d => y(d.max));
+            },
+            update => {
+                update.select("rect")
+                    .transition().duration(500)
+                    .attr("x", d => x(d.key))
+                    .attr("y", d => y(d.q3))
+                    .attr("width", x.bandwidth())
+                    .attr("height", d => y(d.q1) - y(d.q3));
+
+                update.select(".median-line")
+                    .transition().duration(500)
+                    .attr("x1", d => x(d.key))
+                    .attr("x2", d => x(d.key) + x.bandwidth())
+                    .attr("y1", d => y(d.median))
+                    .attr("y2", d => y(d.median));
+    
+                update.select(".min-max-line")
+                    .transition().duration(500)
+                    .attr("x1", d => x(d.key) + x.bandwidth() / 2)
+                    .attr("x2", d => x(d.key) + x.bandwidth() / 2)
+                    .attr("y1", d => y(d.min))
+                    .attr("y2", d => y(d.max));
+            },
+            exit => exit.remove()
+        );
+    }
+    
+    
     // Desenhar um box plot
     function drawBoxPlot(svgId, data, xLabel, yLabel) {
         const svg = d3.select(svgId)
@@ -182,11 +422,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Eixo X
         svg.append("g")
+            .attr("class", "x-axis") // Classe para atualização
             .attr("transform", `translate(0,${boxPlotConfig.height})`)
             .call(d3.axisBottom(x));
 
         // Eixo Y
         svg.append("g")
+            .attr("class", "y-axis") // Classe para atualização
             .call(d3.axisLeft(y));
 
         // Legendas dos eixos
@@ -224,6 +466,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Linha mediana
                 group.append("line")
+                    .attr("class", "median-line") // Adiciona uma classe para fácil referência
                     .attr("x1", x(d.key))
                     .attr("x2", x(d.key) + x.bandwidth())
                     .attr("y1", y(d.median))
@@ -232,6 +475,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Min e Max
                 group.append("line")
+                    .attr("class", "min-max-line") // Adiciona uma classe para fácil referência
                     .attr("x1", x(d.key) + x.bandwidth() / 2)
                     .attr("x2", x(d.key) + x.bandwidth() / 2)
                     .attr("y1", y(d.min))
@@ -267,11 +511,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Carregar e processar os dados
     d3.dsv(";", "./data/student-merge.csv").then(data => {
-        data.forEach(d => {
-            d.G3 = +d.G3;
-            d.Medu = +d.Medu;
-            d.Fedu = +d.Fedu;
-        });
+        originalData = data.map(d => ({
+            ...d,
+            G3: +d.G3,
+            Medu: +d.Medu,
+            Fedu: +d.Fedu
+        }));
+
+        // Desenhar o bar chart
+        drawBarChart(originalData);
 
         // Calcular dados para os box plots
         const motherBoxPlotData = calculateBoxPlotData(data, "Medu", "G3");

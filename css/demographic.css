@@ -18,8 +18,9 @@ header {
     grid-template-columns: 3fr 2fr; /* Bar chart ocupa 2 partes, box plots ocupam 3 */
     grid-template-rows: 1fr;
     gap: 20px;
-    height: calc(100vh - 120px); /* Altura da tela menos header e footer */
-    padding: 10px;
+    height: calc(100vh - 150px); /* Altura da tela menos header e footer */
+    width: 100%;
+    padding: 0 20px 0 20px;
     box-sizing: border-box;
 }
 
@@ -33,7 +34,7 @@ h3 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    height: 88%;
 }
 
 #bar-chart, #boxplot-mother, #boxplot-father {
@@ -47,25 +48,32 @@ h3 {
     justify-content: center;
 }
 
-footer {
+.navbar {
     background-color: #333;
     color: white;
     text-align: center;
-    padding: 10px 0;
     position: fixed;
     width: 100%;
     bottom: 0;
 }
 
-footer nav a {
+.navbar a {
+    float: left;
     color: white;
+    display: block;
     text-decoration: none;
+    padding: 8px 8px;
     margin: 0 15px;
-    font-size: 14px;
+    font-size: 13px;
 }
 
-footer nav a:hover {
+.navbar a:hover {
     text-decoration: underline;
+}
+  
+.navbar a.active {
+    background-color: #8e8e90; /* Cor de destaque */
+    color: white;
 }
 
 #histogram-chart svg {
@@ -99,4 +107,48 @@ rect:hover {
     font-size: 12px;
     pointer-events: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#filters {
+    display:flex;
+    gap: 20px;
+    align-items: center;
+    margin: 10px 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#filters label {
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+#filters select, #filters input {
+    padding: 5px;
+    font-size: 14px;
+}
+
+#reset-filters {
+    background-color: #007bff; /* Cor de fundo azul */
+    color: white; /* Texto branco */
+    border: none; /* Sem borda */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 10px 20px; /* Espaçamento interno */
+    margin-left: 260px;
+    font-size: 14px; /* Tamanho da fonte */
+    font-weight: bold; /* Texto em negrito */
+    cursor: pointer; /* Cursor de mão ao passar por cima */
+    transition: background-color 0.3s, transform 0.2s; /* Animação suave */
+  }
+
+#reset-filters:hover {
+    background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+    transform: scale(1.05); /* Leve aumento do botão */
+}
+
+#reset-filters:active {
+    background-color: #003d7a; /* Azul mais escuro ao clicar */
+    transform: scale(0.95); /* Leve redução ao clicar */
 }
