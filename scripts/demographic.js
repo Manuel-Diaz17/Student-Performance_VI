@@ -15,61 +15,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let originalData;
 
-    // Função para filtrar os dados com base nos filtros selecionados
-    function filterData(data) {
-        const selectedSex = document.getElementById("sex-filter").value;
-        const selectedAge = document.getElementById("age-filter").value;
-        const isAllAgesChecked = document.getElementById("all-ages").checked; // Verifica o estado do checkbox
-        const selectedAddress = document.getElementById("address-filter").value;
-        const selectedPstatus = document.getElementById("pstatus-filter").value;
-
-        return data.filter(d => {
-            return (
-                (selectedSex === "all" || d.sex === selectedSex) &&
-                (isAllAgesChecked || +d.age === +selectedAge) &&
-                (selectedAddress === "all" || d.address === selectedAddress) &&
-                (selectedPstatus === "all" || d.Pstatus === selectedPstatus)
-            );
-        });
-    }
-
-    // Função para resetar todos os filtros para 'all'
-    function resetFilters() {
-        // Resetar idade
-        d3.select("#age-value").text("All");
-        d3.select("#all-ages").property("checked", true);
-
-        // Resetar outros filtros
-        d3.select("#sex-filter").property("value", "all");
-        d3.select("#address-filter").property("value", "all");
-        d3.select("#pstatus-filter").property("value", "all");
-
-        d3.select("#all-ages").property("checked", true);
-
-        // Atualizar gráficos com todos os dados
-        updateAllCharts(originalData); // originalData é o dataset completo
-    }
+    // Configuração para os box plots
+    const boxPlotConfig = {
+        width: 270,
+        height: 150,
+        margin: { top: 5, right: 140, bottom: 45, left: 50 }
+    };
 
     // Adicionar evento ao botão de reset
     document.getElementById("reset-filters").addEventListener("click", resetFilters);
 
-    d3.select("#all-ages").property("checked", true);
+    d3.select("#all-ages").property("checked", true); // All ages checkbox checked
     document.getElementById("age-filter").disabled = true; // Desabilita o slider
-
-    // Função para atualizar todos os gráficos
-    function updateAllCharts(data) {
-        const filteredData = filterData(data);
-
-        // Atualizar gráfico de barras
-        updateBarChart(filteredData);
-
-        const filteredMotherBoxPlotData = calculateBoxPlotData(filteredData, "Medu", "G3");
-        const filteredFatherBoxPlotData = calculateBoxPlotData(filteredData, "Fedu", "G3");
-
-        // Atualizar box plots
-        updateBoxPlot("#boxplot-mother", filteredMotherBoxPlotData, "Medu", "Mother's Qualification", "Final Grade");
-        updateBoxPlot("#boxplot-father", filteredFatherBoxPlotData, "Fedu", "Father's Qualification", "Final Grade");
-    }
 
     // Adicionar eventos aos filtros
     ["sex-filter", "address-filter", "pstatus-filter"].forEach(filterId => {
@@ -108,6 +65,56 @@ document.addEventListener("DOMContentLoaded", () => {
             updateAllCharts(originalData);
         }
     });
+
+    // Função para filtrar os dados com base nos filtros selecionados
+    function filterData(data) {
+        const selectedSex = document.getElementById("sex-filter").value;
+        const selectedAge = document.getElementById("age-filter").value;
+        const isAllAgesChecked = document.getElementById("all-ages").checked; // Verifica o estado do checkbox
+        const selectedAddress = document.getElementById("address-filter").value;
+        const selectedPstatus = document.getElementById("pstatus-filter").value;
+
+        return data.filter(d => {
+            return (
+                (selectedSex === "all" || d.sex === selectedSex) &&
+                (isAllAgesChecked || +d.age === +selectedAge) &&
+                (selectedAddress === "all" || d.address === selectedAddress) &&
+                (selectedPstatus === "all" || d.Pstatus === selectedPstatus)
+            );
+        });
+    }
+
+    // Função para resetar todos os filtros para 'all'
+    function resetFilters() {
+        // Resetar idade
+        d3.select("#age-value").text("All");
+        d3.select("#all-ages").property("checked", true);
+
+        // Resetar outros filtros
+        d3.select("#sex-filter").property("value", "all");
+        d3.select("#address-filter").property("value", "all");
+        d3.select("#pstatus-filter").property("value", "all");
+
+        d3.select("#all-ages").property("checked", true);
+
+        // Atualizar gráficos com todos os dados
+        updateAllCharts(originalData); // originalData é o dataset completo
+    }
+
+    // Função para atualizar todos os gráficos
+    function updateAllCharts(data) {
+        const filteredData = filterData(data);
+
+        // Atualizar gráfico de barras
+        updateBarChart(filteredData);
+
+        const filteredMotherBoxPlotData = calculateBoxPlotData(filteredData, "Medu", "G3");
+        const filteredFatherBoxPlotData = calculateBoxPlotData(filteredData, "Fedu", "G3");
+
+        // Atualizar box plots
+        updateBoxPlot("#boxplot-mother", filteredMotherBoxPlotData, "Medu", "Mother's Qualification", "Final Grade");
+        updateBoxPlot("#boxplot-father", filteredFatherBoxPlotData, "Fedu", "Father's Qualification", "Final Grade");
+    }
 
     // Função para atualizar o gráfico de barras
     function updateBarChart(data) {
@@ -166,8 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .attr("height", d => height - y(d.count)); // Altura correta
     }
     
-    
-
+    // Função para desenhar o gráfico de barras
     function drawBarChart(data) {    
         // Contar a frequência de cada nota final
         const gradeCounts = d3.range(0, 21).map(grade => ({
@@ -275,13 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return boxPlotData;
     }
 
-    // Configuração para os box plots
-    const boxPlotConfig = {
-        width: 270,
-        height: 150,
-        margin: { top: 5, right: 140, bottom: 45, left: 50 }
-    };
-
+    // Função para adicionar legenda ao box plot
     function addBoxPlotLegend(svg, x, y) {
         const legendData = [
             { key: "0", value: "None" },
@@ -398,7 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     
-    // Desenhar um box plot
+    // Função para desenhar um box plot
     function drawBoxPlot(svgId, data, xLabel, yLabel) {
         const svg = d3.select(svgId)
             .append("svg")
