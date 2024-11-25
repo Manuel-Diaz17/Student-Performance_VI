@@ -13,26 +13,41 @@
         </h1>
     </header>
     <main>
-        <div id="containerbehav">
-            <!-- Visualização 1: Box Plot - Relação entre notas finais e consumo de álcool-->
-            <div id="center-panel">
-                <h3>Box Plot: Final Grade vs Weekend Alcohol Consumption</h3>
-                <div id="boxplot"></div>
+            
+            <div id="container">
+                <!-- Visualização 1: Radar Diagram -->
+                <div id="left-panel">
+                    <div id="radar-container">
+                        <h3>Radar Diagram: Behavioral Factors by Final Grades</h3>
+                        <label for="grade-filter">Filter by Grades:</label>
+                        <select id="grade-filter">
+«                          <option value="lessThan10">Less than 10</option>
+                          <option value="between10And15">10-14</option>
+                          <option value="greaterThan14">15 and above</option>
+                        </select>
+                        <div id="radarChart"></div>
+                      </div>
+                </div>
+    
+                <!-- Visualização 2 e 3: Box Plot -->
+                <div id="right-panel">
+                    <div class="boxplot-container">
+                        <h3>Mother's Qualification in Final Grade</h2>
+                        <div id="boxplot"></div>
+                    </div>
+                    <div class="boxplot-container">
+                        <h3>Father's Qualification in Final Grade</h2>
+                        <div id="boxplot-friends"></div>
+                    </div>
+                </div>
+                <div id="tooltip" style="position: absolute; opacity: 0; background: white; border: 1px solid #ddd; border-radius: 5px; padding: 5px; pointer-events: none;"></div>
             </div>
-            <div id="center-panel-2">
-                <h3>Box Plot: Final Grade vs Going Out with Friends</h3>
-                <div id="boxplot-friends"></div>
-            </div>
-            <div id="tooltip" style="position: absolute; opacity: 0; background: white; border: 1px solid #ddd; border-radius: 5px; padding: 5px; pointer-events: none;"></div>
-        </div>
     </main>
-    <footer>
-        <nav>
-            <a href="index.html">Demographic</a>
-            <a href="academic.html">Academic</a>
-            <a href="behavioural.html">Behavioral</a>
-        </nav>
-    </footer>
-    <script src="scripts/behavioural.js"></script>
+    <div class="navbar">
+        <a href="index.html" id="demographic-link">Demographic</a>
+        <a href="academic.html" class="active" id="academic-link">Academic</a>
+        <a href="behavioural.html" id="behavioral-link">Behavioural</a>
+    </div>
+    <script src="scripts/test.js"></script>
 </body>
 </html>
