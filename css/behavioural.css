@@ -37,7 +37,7 @@ h3 {
     height: 88%;
 }
 
-#bar-chart, #boxplot-mother, #boxplot-father {
+#bar-chart, #boxplot, #boxplot-friends, #radarChart {
     width: 100%;
     height: 100%;
     overflow: hidden; /* Garante que nada exceda os limites */
@@ -113,7 +113,7 @@ rect:hover {
     display:flex;
     gap: 20px;
     align-items: center;
-    margin: 10px 20px;
+    margin: 10px 0px;
     padding: 10px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;

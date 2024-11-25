@@ -1,53 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Performance Visualization - behavioural</title>
-  <link rel="stylesheet" href="./css/behavioural.css">
-  <script src="https://d3js.org/d3.v7.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Visualization - behavioural</title>
+    <link rel="stylesheet" href="./css/behavioural.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
+
 <body>
     <header>
         <h1>Student Performance Visualization - Behavioral
         </h1>
     </header>
     <main>
-            
-            <div id="container">
-                <!-- Visualização 1: Radar Diagram -->
-                <div id="left-panel">
-                    <div id="radar-container">
-                        <h3>Radar Diagram: Behavioral Factors by Final Grades</h3>
-                        <label for="grade-filter">Filter by Grades:</label>
-                        <select id="grade-filter">
-«                          <option value="lessThan10">Less than 10</option>
-                          <option value="between10And15">10-14</option>
-                          <option value="greaterThan14">15 and above</option>
-                        </select>
-                        <div id="radarChart"></div>
-                      </div>
+        
+        <div id="container">
+            <!-- Visualização 1: Radar Diagram -->
+            <div id="left-panel">
+                <h3>Radar Diagram: Behavioral Factors by Final Grades</h3>
+                <div id="filters">
+                    <label for="grade-filter">Filter by Grades:</label>
+                    <select id="grade-filter">
+                        <option value="lessThan10">Less than 10</option>
+                        <option value="between10And15">10-14</option>
+                        <option value="greaterThan14">15 and above</option>
+                    </select>
                 </div>
-    
-                <!-- Visualização 2 e 3: Box Plot -->
-                <div id="right-panel">
-                    <div class="boxplot-container">
-                        <h3>Mother's Qualification in Final Grade</h2>
-                        <div id="boxplot"></div>
-                    </div>
-                    <div class="boxplot-container">
-                        <h3>Father's Qualification in Final Grade</h2>
-                        <div id="boxplot-friends"></div>
-                    </div>
+                <div id="radar-container">
+                    <div id="radarChart"></div>
                 </div>
-                <div id="tooltip" style="position: absolute; opacity: 0; background: white; border: 1px solid #ddd; border-radius: 5px; padding: 5px; pointer-events: none;"></div>
             </div>
+
+            <!-- Visualização 2 e 3: Box Plot -->
+            <div id="right-panel">
+                <div class="boxplot-container">
+                    <h3>Alcohol Consumption in Final Grade</h2>
+                        <div id="boxplot"></div>
+                </div>
+                <div class="boxplot-container">
+                    <h3>Going out in Final Grade</h2>
+                        <div id="boxplot-friends"></div>
+                </div>
+            </div>
+            <div id="tooltip"
+                style="position: absolute; opacity: 0; background: white; border: 1px solid #ddd; border-radius: 5px; padding: 5px; pointer-events: none;">
+            </div>
+        </div>
     </main>
     <div class="navbar">
         <a href="index.html" id="demographic-link">Demographic</a>
-        <a href="academic.html" class="active" id="academic-link">Academic</a>
-        <a href="behavioural.html" id="behavioral-link">Behavioural</a>
+        <a href="academic.html" id="academic-link">Academic</a>
+        <a href="behavioural.html" class="active" id="behavioral-link">Behavioural</a>
     </div>
     <script src="scripts/test.js"></script>
 </body>
+
 </html>
