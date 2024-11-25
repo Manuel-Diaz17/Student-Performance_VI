@@ -12,6 +12,72 @@ header {
     font-size: 8px;
 }
 
+main {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Filtros */
+.filters-container {
+    width: 10%;
+    background-color: #f9f9f9;
+    padding: 0px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.filters-container label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.filters-container select {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+/* Gráficos */
+.scatterplot-container {
+    width: 55%;
+    background-color: #ffffff;
+    padding: 0px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: calc(100vh - 150px);
+}
+
+.right-panel {
+    width: 25%;
+    background-color: #ffffff;
+    height: calc(100vh - 150px);
+}
+
+/* Gráficos */
+.line-chart-container {
+    position: relative;
+    background-color: #ffffff;
+    padding: 0px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 74%;
+}
+
+/* Legenda */
+.legend {
+    font-size: 12px;
+    fill: #333;
+}
+
+/* Tooltip */
+#tooltip {
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+}
+
 .navbar {
     background-color: #333;
     color: white;
@@ -38,4 +104,72 @@ header {
 .navbar a.active {
     background-color: #8e8e90; /* Cor de destaque */
     color: white;
+}
+
+#reset-filters {
+    background-color: #007bff; /* Cor de fundo azul */
+    color: white; /* Texto branco */
+    margin-top: 20px;
+    border: none; /* Sem borda */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 10px 20px; /* Espaçamento interno */
+    font-size: 14px; /* Tamanho da fonte */
+    font-weight: bold; /* Texto em negrito */
+    cursor: pointer; /* Cursor de mão ao passar por cima */
+    transition: background-color 0.3s, transform 0.2s; /* Animação suave */
+  }
+
+#reset-filters:hover {
+    background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+    transform: scale(1.05); /* Leve aumento do botão */
+}
+
+#reset-filters:active {
+    background-color: #003d7a; /* Azul mais escuro ao clicar */
+    transform: scale(0.95); /* Leve redução ao clicar */
+}
+
+#reset-zoom {
+    background-color: white; /* Cor de fundo azul */
+    color: white; /* Texto branco */
+    height: 30px;
+    width: 30px;
+    background-position: cover;
+    margin-bottom: 120px;
+    border: 1px solid #333; /* Sem borda */
+    border-color: #333;
+    border-radius: 5px; /* Bordas arredondadas */
+    font-size: 14px; /* Tamanho da fonte */
+    font-weight: bold; /* Texto em negrito */
+    cursor: pointer; /* Cursor de mão ao passar por cima */
+    transition: background-color 0.3s, transform 0.2s; /* Animação suave */
+}
+
+#reset-zoom:hover {
+    background-color: #f9f9f9; /* Azul mais escuro ao passar o mouse */
+    transform: scale(1.05); /* Leve aumento do botão */
+}
+
+#reset-zoom:active {
+    background-color: #003d7a; /* Azul mais escuro ao clicar */
+    transform: scale(0.95); /* Leve redução ao clicar */
+}
+
+#close-line-chart {
+    position: absolute;
+    top: 17px; /* Distância do topo do container */
+    right: 17px; /* Distância da borda direita do container */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+#close-line-chart img {
+    width: 15px; /* Ajuste o tamanho do ícone */
+    height: 15px;
+}
+
+#close-line-chart:hover {
+    transform: scale(1.25); /* Leve aumento do botão */
 }

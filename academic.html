@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Performance Visualization</title>
-    <link rel="stylesheet" href="./css/demographic.css">
+    <link rel="stylesheet" href="./css/academic.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
@@ -12,7 +12,59 @@
         <h1>Student Performance Visualization</h1>
     </header>
     <main>
+        <div class="filters-container">
+            <h3>Filters</h3>
+            <label for="course-filter">Course:</label>
+            <select id="course-filter" class="filter">
+                <option value="all">All</option>
+                <option value="mat">Math</option>
+                <option value="por">Portuguese</option>
+            </select>
+
+            <label for="higher-filter">Higher Education:</label>
+            <select id="higher-filter" class="filter">
+                <option value="all">All</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+
+            <label for="internet-filter">Internet Access:</label>
+            <select id="internet-filter" class="filter">
+                <option value="all">All</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+
+            <label for="activities-filter">Extracurricular Activities:</label>
+            <select id="activities-filter" class="filter">
+                <option value="all">All</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+
+            <label for="paid-filter">Extra Paid Classes:</label>
+            <select id="paid-filter" class="filter">
+                <option value="all">All</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+
+            <button id="reset-filters">Reset Filters</button>
+        </div>
         
+        <div class="scatterplot-container">
+            <h3>Absences and Study Time in Final Grade</h3>
+            <div id="scatterplot"></div>
+        </div>
+
+        <div class="right-panel">
+            <button id="reset-zoom"><img src="assets/zoomout_icon.png" /></button>
+            <div class="line-chart-container">
+                <h3>Student Progression</h3>
+                <button id="close-line-chart"><img src="assets/close_icon.png" /></button>
+                <div id="line-chart"></div>
+            </div>
+        </div>
     </main>
     <div class="navbar">
         <a href="index.html" id="demographic-link">Demographic</a>
@@ -20,6 +72,6 @@
         <a href="behavioural.html" id="behavioral-link">Behavioural</a>
         <a href="radar.html">Radar</a>
     </div>
-    <script src="./scripts/demographic.js"></script>
+    <script src="./scripts/academic.js"></script>
 </body>
 </html>
