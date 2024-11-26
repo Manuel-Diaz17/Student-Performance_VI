@@ -30,14 +30,32 @@ h3 {
     font-size: 15px;
 }
 
-#left-panel, #right-panel {
+#left-panel {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 88%;
 }
 
-#bar-chart, #boxplot, #boxplot-friends, #radarChart {
+#right-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 70%;
+}
+
+#radarChart {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Garante que nada exceda os limites */
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#boxplot {
     width: 100%;
     height: 100%;
     overflow: hidden; /* Garante que nada exceda os limites */
@@ -113,7 +131,7 @@ rect:hover {
     display:flex;
     gap: 20px;
     align-items: center;
-    margin: 10px 0px;
+    margin-bottom: 10px;
     padding: 10px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;

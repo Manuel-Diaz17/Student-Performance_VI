@@ -11,15 +11,14 @@
 
 <body>
     <header>
-        <h1>Student Performance Visualization - Behavioral
+        <h1>Student Performance Visualization - Behavioural Data
         </h1>
     </header>
     <main>
-        
         <div id="container">
             <!-- Visualização 1: Radar Diagram -->
             <div id="left-panel">
-                <h3>Radar Diagram: Behavioral Factors by Final Grades</h3>
+                <h3>Behavioral Factors by Final Grades</h3>
                 <div id="filters">
                     <label for="grade-filter">Filter by Grades:</label>
                     <select id="grade-filter">
@@ -35,13 +34,19 @@
 
             <!-- Visualização 2 e 3: Box Plot -->
             <div id="right-panel">
-                <div class="boxplot-container">
-                    <h3>Alcohol Consumption in Final Grade</h2>
-                        <div id="boxplot"></div>
+                <h3> Final Grade Variation by Behavioural Factors</h2>
+                <div id="filters">
+                    <label for="x-axis-filter">Select Variable:</label>
+                    <select id="x-axis-filter">
+                        <option value="Walc">Alcohol Consumption</option>
+                        <option value="Goout">Going Out with Friends</option>
+                        <option value="famrel">Family Relationship</option>
+                        <option value="health">Health</option>
+                        <option value="freetime">Free Time</option>
+                    </select>
                 </div>
                 <div class="boxplot-container">
-                    <h3>Going out in Final Grade</h2>
-                        <div id="boxplot-friends"></div>
+                    <div id="boxplot"></div>
                 </div>
             </div>
             <div id="tooltip"
@@ -54,7 +59,7 @@
         <a href="academic.html" id="academic-link">Academic</a>
         <a href="behavioural.html" class="active" id="behavioral-link">Behavioural</a>
     </div>
-    <script src="scripts/test.js"></script>
+    <script src="scripts/behavioural.js"></script>
 </body>
 
 </html>
