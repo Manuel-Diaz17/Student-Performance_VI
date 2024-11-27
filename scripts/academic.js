@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const dataPath = "./data/student-merge.csv";
+    const dataPath = "../data/student-merge.csv";
     let originalData; // Variável para armazenar os dados originais
 
     //Função para calcular a regressão linear

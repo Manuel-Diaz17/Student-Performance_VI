@@ -1,7 +1,7 @@
 // script.js
 document.addEventListener("DOMContentLoaded", () => {
     // Caminho para o dataset
-    const dataPath = "./data/student-merge.csv";
+    const dataPath = "../data/student-merge.csv";
 
     // Carregar os dados usando D3
     d3.csv(dataPath).then(data => {
@@ -510,7 +510,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Carregar e processar os dados
-    d3.dsv(";", "./data/student-merge.csv").then(data => {
+    d3.dsv(";", "../data/student-merge.csv").then(data => {
         originalData = data.map(d => ({
             ...d,
             G3: +d.G3,

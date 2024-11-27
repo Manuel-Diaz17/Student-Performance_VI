@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Visualization</title>
+    <link rel="stylesheet" href="../css/demographic.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Student Performance Visualization - Demographic Data</h1>
+    </header>
+    <main>
+        <div id="filters">
+            <label for="sex-filter">Sex:</label>
+            <select id="sex-filter">
+                <option value="all">All</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+        
+            
+                <label for="age-filter">Idade:</label>
+                <span id="age-value">All</span> <!-- Exibe a idade selecionada -->
+                <input type="range" id="age-filter" min="15" max="22" value="15">
+                <label for="all-ages">All ages</label>
+                <input type="checkbox" id="all-ages" name="all-ages">
+            
+        
+            <label for="address-filter">Address:</label>
+            <select id="address-filter">
+                <option value="all">All</option>
+                <option value="U">Urban</option>
+                <option value="R">Rural</option>
+            </select>
+        
+            <label for="pstatus-filter">Parent's cohabitation status:</label>
+            <select id="pstatus-filter">
+                <option value="all">All</option>
+                <option value="T">Living Together</option>
+                <option value="A">Apart</option>
+            </select>
+
+            <button id="reset-filters">Reset Filters</button>
+        </div>
+        <div id="container">
+            <!-- Visualização 1: Bar Chart - Distribuição das notas-->
+            <div id="left-panel">
+                <h3>Final Grades Distribution</h2>
+                <div id="bar-chart"></div>
+            </div>
+
+            <!-- Visualização 2 e 3: Box Plot - Formação do pai e da mãe-->
+            <div id="right-panel">
+                <div class="boxplot-container">
+                    <h3>Mother's Qualification in Final Grade</h2>
+                    <div id="boxplot-mother"></div>
+                </div>
+                <div class="boxplot-container">
+                    <h3>Father's Qualification in Final Grade</h2>
+                    <div id="boxplot-father"></div>
+                </div>
+            </div>
+            <div id="tooltip" style="position: absolute; opacity: 0; background: white; border: 1px solid #ddd; border-radius: 5px; padding: 5px; pointer-events: none;"></div>
+        </div>
+    </main>
+    <div class="navbar">
+        <a href="../index.html" id="index-link">Student Performance</a>
+        <a href="../pages/demographic.html" class="active" id="demographic-link">Demographic</a>
+        <a href="../pages/academic.html" id="academic-link">Academic</a>
+        <a href="../pages/behavioural.html" id="behavioral-link">Behavioural</a>
+    </div>
+    <script src="../scripts/demographic.js"></script>
+</body>
+</html>
