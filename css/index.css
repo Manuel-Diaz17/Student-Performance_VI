@@ -1,0 +1,100 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Header */
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 8px;
+}
+
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+p {
+    text-align: justify;
+}
+
+
+/* About Section */
+#about-dataset {
+    background: #69b3ac4d;
+    padding: 20px;
+    margin: 40px auto;
+    max-width: 800px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+#about-dataset h2 {
+    color: #2d2f2e;
+    margin-bottom: 10px;
+}
+
+#about-dataset p {
+    margin-bottom: 15px;
+}
+
+#about-dataset ul {
+    margin-left: 20px;
+    list-style: disc;
+}
+
+.navbar {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.navbar a {
+    float: left;
+    color: white;
+    display: block;
+    text-decoration: none;
+    padding: 8px 8px;
+    margin: 0 15px;
+    font-size: 13px;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+  
+.navbar a.active {
+    background-color: #8e8e90; /* Cor de destaque */
+    color: white;
+}
+
+/* Main Content */
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    margin-top: 20px;
+}
