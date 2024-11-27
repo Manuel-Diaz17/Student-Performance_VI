@@ -1,11 +1,11 @@
 /* Global Styles */
 body {
     font-family: 'Roboto', Arial, sans-serif;
-    line-height: 1.6;
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
     color: #333;
+    overflow: hidden;
 }
 
 /* Header */
@@ -31,6 +31,7 @@ p {
 /* About Section */
 #about-dataset {
     background: #69b3ac4d;
+    line-height: 1.6;
     padding: 20px;
     margin: 40px auto;
     max-width: 800px;
